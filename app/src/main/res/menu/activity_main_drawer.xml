@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/hotJObs"
+            android:icon="@drawable/jobs"
+            android:title="Hot Jobs" />
+        <item
+            android:id="@+id/govtJobs"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Govt Jobs" />
+        <item
+            android:id="@+id/bankJObs"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Bank Jobs" />
+        <item
+            android:id="@+id/ngo"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="NGO/DEvelopment" />
+        <item
+            android:id="@+id/marketingJobs"
+            android:icon="@drawable/jobs"
+            android:title="Marketing Jobs" />
+    </group>
+
+    <item android:title="Notice">
+        <menu>
+            <item
+                android:id="@+id/bcsNotice"
+                android:icon="@drawable/ic_menu_send"
+                android:title="BCS Notice" />
+            <item
+                android:id="@+id/jobNotice"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Job Notice" />
+        </menu>
+    </item>
+
+</menu>

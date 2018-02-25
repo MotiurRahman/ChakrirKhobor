@@ -7,7 +7,12 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,26 +22,33 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
-public class ChakrirKhobor extends AppCompatActivity {
-    public static String FACEBOOK_URL = "https://www.facebook.com/wasam.arts";
-    public static String FACEBOOK_PAGE_ID = "272795986394721";
-
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     private ProgressBar proBar;
     private WebView chakrirkhobor;
-    // Remove the below line after defining your own ad unit ID.
-    private static final String TOAST_TEXT = "Test ads are being shown. "
-            + "To show live ads, replace the ad unit ID in res/values/strings.xml with your own ad unit ID.";
+    public static String FACEBOOK_URL = "https://www.facebook.com/wasam.arts";
+    public static String FACEBOOK_PAGE_ID = "272795986394721";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chakrir_khobor);
+        setContentView(R.layout.activity_main);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
 
         //Check internet
@@ -61,7 +73,7 @@ public class ChakrirKhobor extends AppCompatActivity {
         chakrirkhobor.setInitialScale(1);
         chakrirkhobor.getSettings().setDisplayZoomControls(false);
         chakrirkhobor.getSettings().setBuiltInZoomControls(true);
-       // chakrirkhobor.setVerticalScrollBarEnabled(false);
+        // chakrirkhobor.setVerticalScrollBarEnabled(false);
         chakrirkhobor.setHorizontalScrollBarEnabled(false);
         webSettings.setDomStorageEnabled(true);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
@@ -78,7 +90,7 @@ public class ChakrirKhobor extends AppCompatActivity {
         chakrirkhobor.loadUrl("https://chakrirkhobor.net/");
         chakrirkhobor.setWebViewClient(new mywebClient());
 
-         proBar = (ProgressBar)findViewById(R.id.progressBar1);
+        proBar = (ProgressBar)findViewById(R.id.progressBar1);
 
 
 
@@ -88,18 +100,16 @@ public class ChakrirKhobor extends AppCompatActivity {
                 .setRequestAgent("android_studio:ad_template").build();
         adView.loadAd(adRequest);
         MobileAds.initialize(this, "ca-app-pub-1090282204928094~4758004250");
-
-
     }
 
     //For webview progress bar loading
 
-    public class mywebClient extends WebViewClient{
+    public class mywebClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             proBar.setVisibility(View.GONE);
-            setTitle(view.getTitle());
+            //setTitle(view.getTitle());
 
         }
 
@@ -108,7 +118,7 @@ public class ChakrirKhobor extends AppCompatActivity {
 
             super.onPageStarted(view, url, favicon);
             proBar.setVisibility(View.VISIBLE);
-            setTitle("Loading.....");
+            //setTitle("Loading.....");
         }
 
         @Override
@@ -131,7 +141,7 @@ public class ChakrirKhobor extends AppCompatActivity {
                 case KeyEvent.KEYCODE_BACK:
                     if (chakrirkhobor.canGoBack()) {
                         chakrirkhobor.goBack();
-                    } 
+                    }
                     return true;
             }
 
@@ -150,6 +160,16 @@ public class ChakrirKhobor extends AppCompatActivity {
     }
     //End internet connection
 
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     //For menu view
 
@@ -259,5 +279,37 @@ public class ChakrirKhobor extends AppCompatActivity {
 
     //End opne facebook page
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
+        if (id == R.id.hotJObs) {
+            // Handle the camera action
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/hot-jobs/");
+        } else if (id == R.id.govtJobs) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/govt-jobs/");
+
+        } else if (id == R.id.bankJObs) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/bank-jobs-circular/");
+
+        } else if (id == R.id.ngo) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/ngodevelopment/");
+
+        } else if (id == R.id.marketingJobs) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/marketingsales/");
+
+        } else if (id == R.id.bcsNotice) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/bcs-notice/");
+
+        }else if (id == R.id.jobNotice) {
+            chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/notice/");
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }
