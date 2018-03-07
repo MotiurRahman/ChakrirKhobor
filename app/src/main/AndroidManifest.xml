@@ -17,14 +17,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ChakrirKhobor">
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="https://chakrirkhobor.net" />
-            </intent-filter>
         </activity>
 
         <!-- This meta-data tag is required to use Google Play Services. -->
@@ -43,8 +35,11 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="www.chakrirkhobor.net" />
             </intent-filter>
         </activity>
     </application>
