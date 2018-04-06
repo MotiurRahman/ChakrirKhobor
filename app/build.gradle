@@ -1,13 +1,32 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.8.1'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
     defaultConfig {
+        manifestPlaceholders = [
+                onesignal_app_id: '0767cfc0-6f61-4026-8c94-35babbea3cd9',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
         applicationId "chakrirkhobor.bd.com.chakrirkhobor"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 4
-        versionName "2"
+        versionCode 5
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,6 +44,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:11.8.0'
     implementation 'com.android.support:design:26.1.0'
     testImplementation 'junit:junit:4.12'
+    compile 'com.onesignal:OneSignal:[3.8.3, 3.99.99]'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }

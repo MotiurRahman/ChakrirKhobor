@@ -1,5 +1,4 @@
 package chakrirkhobor.bd.com.chakrirkhobor;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,9 +21,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.onesignal.OneSignal;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -49,6 +50,12 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // OneSignal Initialization
+        OneSignal.startInit(this)
+                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+                .unsubscribeWhenNotificationsAreDisabled(true)
+                .init();
 
 
         //Check internet
@@ -212,6 +219,12 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
             }
 
+
+        }
+
+        if(id==R.id.action_close){
+
+           finish();
 
         }
 
