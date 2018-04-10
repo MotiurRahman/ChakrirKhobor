@@ -1,4 +1,5 @@
 package chakrirkhobor.bd.com.chakrirkhobor;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +13,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ProgressBar proBar;
     private WebView chakrirkhobor;
-    public static String FACEBOOK_URL = "https://www.facebook.com/wasam.arts";
-    public static String FACEBOOK_PAGE_ID = "272795986394721";
+    public static String FACEBOOK_URL = "https://www.facebook.com/chakrirkhobornets/";
+    public static String FACEBOOK_PAGE_ID = "381462145568985";
 
 
     @Override
@@ -63,11 +63,11 @@ public class MainActivity extends AppCompatActivity
         if (isNetworkConnected()) {
 
         } else {
-            Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
 
         // Webview
-        chakrirkhobor = (WebView)findViewById(R.id.web1);
+        chakrirkhobor = (WebView) findViewById(R.id.web1);
         WebSettings webSettings = chakrirkhobor.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -91,14 +91,10 @@ public class MainActivity extends AppCompatActivity
         webSettings.setEnableSmoothTransition(true);
 
 
-
-
-
         chakrirkhobor.loadUrl("https://chakrirkhobor.net/");
         chakrirkhobor.setWebViewClient(new mywebClient());
 
-        proBar = (ProgressBar)findViewById(R.id.progressBar1);
-
+        proBar = (ProgressBar) findViewById(R.id.progressBar1);
 
 
         // Load an ad into the AdMob banner view.
@@ -138,26 +134,6 @@ public class MainActivity extends AppCompatActivity
     //End webview progress bar
 
 
-    //WebView back button
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (event.getAction() == KeyEvent.ACTION_DOWN) {
-            switch (keyCode) {
-                case KeyEvent.KEYCODE_BACK:
-                    if (chakrirkhobor.canGoBack()) {
-                        chakrirkhobor.goBack();
-                    }
-                    return true;
-            }
-
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    //end WebView back button
-
     //For internet connection
 
     private boolean isNetworkConnected() {
@@ -170,8 +146,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+
+        if (chakrirkhobor.canGoBack()) {
+            chakrirkhobor.goBack();
+        } else if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -200,15 +180,13 @@ public class MainActivity extends AppCompatActivity
                 Intent facebookIntent = openFacebook(this);
                 startActivity(facebookIntent);
             } else {
-                Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
             }
-
-
 
 
         }
 
-        if(id==R.id.action_ratings){
+        if (id == R.id.action_ratings) {
 
             if (isNetworkConnected()) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
@@ -216,27 +194,41 @@ public class MainActivity extends AppCompatActivity
                 i.setData(Uri.parse("market://details?id=chakrirkhobor.bd.com.chakrirkhobor"));
                 startActivity(i);
             } else {
-                Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
             }
 
 
         }
 
-        if(id==R.id.action_close){
+        if (id == R.id.action_update) {
 
-           finish();
+            if (isNetworkConnected()) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+
+                i.setData(Uri.parse("market://details?id=chakrirkhobor.bd.com.chakrirkhobor"));
+                startActivity(i);
+            } else {
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+
+        if (id == R.id.action_close) {
+
+            finish();
 
         }
 
 
-        if(id==R.id.action_apps){
+        if (id == R.id.action_apps) {
 
             if (isNetworkConnected()) {
                 Intent devAccount = new Intent(Intent.ACTION_VIEW);
                 devAccount.setData(Uri.parse("http://play.google.com/store/apps/dev?id=6031616565948906744"));
                 startActivity(devAccount);
             } else {
-                Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
             }
 
 
@@ -248,7 +240,7 @@ public class MainActivity extends AppCompatActivity
                 chakrirkhobor.loadUrl("https://chakrirkhobor.net/");
 
             } else {
-                Toast.makeText(getApplicationContext(),"No internet connection",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
             }
 
         }
@@ -261,15 +253,15 @@ public class MainActivity extends AppCompatActivity
 
     //Open facebook page
 
-    public static Intent openFacebook(Context context){
+    public static Intent openFacebook(Context context) {
 
 
         PackageManager packageManager = context.getPackageManager();
         try {
             int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
 
-            boolean activated =  packageManager.getApplicationInfo("com.facebook.katana", 0).enabled;
-            if(activated){
+            boolean activated = packageManager.getApplicationInfo("com.facebook.katana", 0).enabled;
+            if (activated) {
                 if ((versionCode >= 3002850)) {
 
                     return new Intent(Intent.ACTION_VIEW,
@@ -280,7 +272,7 @@ public class MainActivity extends AppCompatActivity
                             Uri.parse("fb://page/" + FACEBOOK_PAGE_ID));
 
                 }
-            }else{
+            } else {
                 return new Intent(Intent.ACTION_VIEW,
                         Uri.parse(FACEBOOK_URL));
             }
@@ -316,7 +308,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.bcsNotice) {
             chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/bcs-notice/");
 
-        }else if (id == R.id.jobNotice) {
+        } else if (id == R.id.jobNotice) {
             chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/notice/");
 
         }
