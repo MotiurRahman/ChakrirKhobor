@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -65,6 +66,29 @@ public class MainActivity extends AppCompatActivity
         } else {
             Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
         }
+
+
+
+        //Floting action button
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (isNetworkConnected()) {
+
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+
+                    i.setData(Uri.parse("market://details?id=motiur_bdjobs.bd.com.allbdjobs"));
+                    startActivity(i);
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
 
         // Webview
         chakrirkhobor = (WebView) findViewById(R.id.web1);
@@ -234,6 +258,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+
         if (id == R.id.home) {
 
             if (isNetworkConnected()) {
@@ -311,7 +336,19 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.jobNotice) {
             chakrirkhobor.loadUrl("https://chakrirkhobor.net/category/notice/");
 
+        } else if (id == R.id.bdResult) {
+
+            if (isNetworkConnected()) {
+                Intent devAccount = new Intent(Intent.ACTION_VIEW);
+                devAccount.setData(Uri.parse("market://details?id=motiur_bdresult.bd.com.bdresult"));
+                startActivity(devAccount);
+            } else {
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_LONG).show();
+            }
+
+
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

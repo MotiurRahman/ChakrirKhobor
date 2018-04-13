@@ -15,9 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ChakrirKhobor">
-
-        </activity>
 
         <!-- This meta-data tag is required to use Google Play Services. -->
         <meta-data
